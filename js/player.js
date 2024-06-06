@@ -54,3 +54,53 @@ const data = {
         },
     ]
 }
+
+function App() {
+    const container = document.createElement("div");
+    container.classList.add("App")
+    // ..app...
+
+    container.append(
+        Header(),
+        // Main()
+    )
+
+    return container
+}
+
+//
+/* 
+<header>
+<div class="header-container">
+    <img src="img/logo/logo.svg" alt="logo">
+    <div class="logo-name">InPlayer</div>
+</div>
+</header> */
+
+
+function Header() {
+    const header = document.createElement("header")
+
+    const headerContainer = document.createElement("div")
+    headerContainer.classList.add("header-container")
+
+    const headerImg = document.createElement("img")
+    headerImg.src = "img/logo/logo.svg";
+
+    const headerLogo = document.createElement("div")
+    headerLogo.innerText =  "InPlayer"
+    headerLogo.classList.add("logo-name")
+
+    headerContainer.append(headerImg, headerLogo)
+    header.append(headerContainer)
+
+
+    return header 
+}
+
+
+const root = document.getElementById("root");
+
+root.append(
+    App() // => container
+)
