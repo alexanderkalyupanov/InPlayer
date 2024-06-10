@@ -206,25 +206,26 @@ function PlaylistInfo(playlistInfo) {
 
     wrapper.append(title, tracksCount)
 
-    const buttonsContainer = document.createElement("div");
-    buttonsContainer.classList.add("buttons-container");
+    // ButtonsEditDelete
+    // const buttonsContainer = document.createElement("div");
+    // buttonsContainer.classList.add("buttons-container");
 
-    const editBtn = document.createElement("button");
-    const editBtnImg = document.createElement("img")
-    editBtnImg.src = "img/icons/edit.svg";
-    editBtn.append(editBtnImg);
+    // const editBtn = document.createElement("button");
+    // const editBtnImg = document.createElement("img")
+    // editBtnImg.src = "img/icons/edit.svg";
+    // editBtn.append(editBtnImg);
 
-    const delBtn = document.createElement("button");
-    const delBtnImg = document.createElement("img")
-    delBtnImg.src = "img/icons/basket.svg";
-    delBtn.append(delBtnImg);
+    // const delBtn = document.createElement("button");
+    // const delBtnImg = document.createElement("img")
+    // delBtnImg.src = "img/icons/basket.svg";
+    // delBtn.append(delBtnImg);
 
-    buttonsContainer.append(
-        editBtn,
-        delBtn
-    )
+    // buttonsContainer.append(
+    //     editBtn,
+    //     delBtn
+    // )
 
-    container.append(img, wrapper, buttonsContainer);
+    container.append(img, wrapper, ButtonsEditDelete());
 
     return container;
 }
@@ -363,8 +364,8 @@ function ButtonsEditDelete() {
     delBtnImg.src = "img/icons/basket.svg";
     delBtn.append(delBtnImg)
 
-    buttonsContainer.append(editBtn, delBtn)
-    return buttonsContainer
+    buttonsContainer.append(editBtn, delBtn);
+    return buttonsContainer;
 }
 
 
