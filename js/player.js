@@ -89,14 +89,14 @@ const data = {
     ],
   };
   
-function App() {
+function App(someData) {
     const container = document.createElement("div");
     container.classList.add("App")
     // ..app...
 
     container.append(
         Header(),
-        Main()
+        Main(someData)
     )
 
     return container
@@ -126,11 +126,12 @@ function Header() {
 
 // Main
 
-function Main() {
+function Main(someData) {
     const container = document.createElement("main");
+
     container.append(
         AddPlaylistPanel(),
-        Playlists()
+        Playlists(someData)
     )
 
     return container
@@ -160,11 +161,11 @@ function  AddPlaylistPanel() {
 
 // Playlists
 
-function Playlists() {
+function Playlists(someData) {
     const container = document.createElement("div");
     container.classList.add("playlists");
 
-    for (let i = 0; i < data.playlists.length; i++) {
+    for (let i = 0; i < someData.playlists.length; i++) {
         container.append(Playlist(data.playlists[i]))
     }
 
@@ -173,12 +174,17 @@ function Playlists() {
 
 // Playlist
 
-function Playlist(playlist) {
+function Playlist(somePlaylist) {
+    // const playlistInfo = somePlaylist.playlistInfo;
+    // const tracks = somePlaylist.tracks;
+
+    const {playlistInfo, tracks} = somePlaylist;
+
     const container = document.createElement("article");
     container.classList.add("playlist");
     container.append(
-        PlaylistInfo(playlist.playlistInfo),
-        Tracklist(playlist.tracks)
+        PlaylistInfo(playlistInfo),
+        Tracklist(tracks)
     )
 
     return container;
@@ -186,25 +192,27 @@ function Playlist(playlist) {
 
 // PlaylistInfo, Tracklist
 
-function PlaylistInfo(playlistInfo) {
+function PlaylistInfo(somePlaylistInfo) {
+    const {coverImgUrl, title, tracksCount} = somePlaylistInfo;
+
     const container = document.createElement("div")
     container.classList.add("playlist-info")
 
     const img = document.createElement("img")
     img.classList.add("playlist-cover-image")
-    img.src = playlistInfo.coverImgUrl;
+    img.src = coverImgUrl;
 
     const wrapper = document.createElement("div");
 
-    const title = document.createElement("h2");
-    title.classList.add("title");
-    title.innerText = playlistInfo.title
+    const titleElement = document.createElement("h2");
+    titleElement.classList.add("title");
+    titleElement.innerText = title
 
-    const tracksCount = document.createElement("div");
-    tracksCount.classList.add("tracks-count")
-    tracksCount.innerText = playlistInfo.tracksCount + " tracks"
+    const tracksCountElement = document.createElement("div");
+    tracksCountElement.classList.add("tracks-count")
+    tracksCountElement.innerText = tracksCount + " tracks"
 
-    wrapper.append(title, tracksCount)
+    wrapper.append(titleElement, tracksCountElement)
 
     // ButtonsEditDelete
     // const buttonsContainer = document.createElement("div");
@@ -230,13 +238,13 @@ function PlaylistInfo(playlistInfo) {
     return container;
 }
 
-function Tracklist(tracks) {
+function Tracklist(someTracks) {
     const container = document.createElement("div")
     container.classList.add("tracklist")
 
     container.append(
         AddTrackPanel(),
-        List(tracks)
+        List(someTracks)
     )
 
     return container;
@@ -266,12 +274,12 @@ function AddTrackPanel() {
 
 // List
 
-function List(tracks) {
+function List(someTracks) {
     const container = document.createElement("ul");
     container.classList.add("list");
 
-    for (let i = 0; i < tracks.length; i++) {
-        container.append(Track(tracks[i]))
+    for (let i = 0; i < someTracks.length; i++) {
+        container.append(Track(someTracks[i]))
     }
 
     return container
@@ -283,17 +291,19 @@ function List(tracks) {
 {/* <img class="track-cover-image" src="img/cardImage/trackList/track1.jpeg"
 alt="track-cover"> */}
 
-function Track(track) {
+function Track(someTrack) {
+    const {trackCoverImgUrl, ...restTrackData} = someTrack;
+
     const container = document.createElement("li");
     container.classList.add("track-element");
 
     const trackCoverImg = document.createElement("img");
     trackCoverImg.classList.add("track-cover-image");
-    trackCoverImg.src = track.trackCoverImgUrl;
+    trackCoverImg.src = trackCoverImgUrl;
 
     container.append(
         trackCoverImg,
-        TrackDetails(track)
+        TrackDetails(restTrackData)
     )
 
     return container
@@ -302,16 +312,18 @@ function Track(track) {
 
 // TrackDetails
 
-function TrackDetails(track) {
+function TrackDetails(someRestTrackData) {
+    const { trackFileUrl, ...restTrackData } = someRestTrackData
+
     const container = document.createElement("div");
     container.classList.add("track-details");
 
     const audio = document.createElement("audio");
-    audio.src = track.trackFileUrl;
+    audio.src = trackFileUrl;
     audio.controls = true;
 
     container.append(
-        TrackTopLine(track),
+        TrackTopLine(restTrackData),
         audio
     )
 
@@ -321,11 +333,13 @@ function TrackDetails(track) {
 
 // TrackTopLine
 
-function TrackTopLine(track) {
+function TrackTopLine(someRestTrackData) {
+
+    const { isHot, artistName, trackTitle } = someRestTrackData
     const container = document.createElement("div");
     container.classList.add("track-top-line");
 
-    if (track.isHot) {
+    if (isHot) {
         const trackHotImg = document.createElement("img");
         trackHotImg.classList.add("track-status");
         trackHotImg.src = "img/icons/hot.svg"
@@ -336,7 +350,7 @@ function TrackTopLine(track) {
 
     const trackName = document.createElement("div");
     trackName.classList.add("track-name")
-    trackName.innerText = track.artistName + "-" + track.trackTitle;
+    trackName.innerText = artistName + "-" + trackTitle;
     trackInfo.append(
         trackName, 
         ButtonsEditDelete()
@@ -384,9 +398,15 @@ function ButtonsEditDelete() {
 //     return container
 // }
 
-const root = document.getElementById("root");
 
-root.append(
-    App() // => container
+// render DOM
+
+function render(someData) {
+  const root = document.getElementById("root");
+    root.append(
+    App(someData) // => container
 )
+}
+
+render(data)
 
