@@ -174,9 +174,7 @@ function Playlists(someData) {
 
 // Playlist
 
-function Playlist(somePlaylist) {
-    // const playlistInfo = somePlaylist.playlistInfo;
-    // const tracks = somePlaylist.tracks;
+function PlayList(somePlaylist) {
 
     const {playlistInfo, tracks} = somePlaylist;
 
