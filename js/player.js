@@ -212,7 +212,6 @@ function PlaylistInfo(somePlaylistInfo) {
 
     wrapper.append(titleElement, tracksCountElement)
 
-    ButtonsEditDelete
     const buttonsContainer = document.createElement("div");
     buttonsContainer.classList.add("buttons-container");
 
